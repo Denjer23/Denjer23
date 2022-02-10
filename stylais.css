@@ -1,0 +1,39 @@
+
+body{
+    background-color: rgb(62, 156, 228);
+
+    font-weight: normal;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: medium;
+    font-style: normal;
+ } h1 {color: crimson;
+font-style: normal;}
+.special {
+     color: rgb(238, 208, 224);
+     font-weight: bold;
+    }
+ .gyu{ width: auto;
+border-radius: 20px;
+box-shadow: 6px 6px 28px rgba(rgb(54, 35, 35));
+
+} 
+.yui{ font-style: italic;
+
+ } 
+ 
+ .kier{ max-width: 800px;
+    background-color: aqua;
+    padding: 10px;
+border: 5px solid red;
+margin: 20px ;
+ }
+ .kil{ color: black;
+    text-decoration: none;}
+    .kil:hover{ text-decoration: underline; 
+    
+ }
+ .nim{ background-color: rgb(212, 129, 208);
+font-weight: 600;
+
+ }
+/* :nth-child()- задает какую часть столбика нужно/*

@@ -141,3 +141,85 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+// В App.js
+import { analyzeCommand } from './utils/analyzeCommand'; // Путь к файлу с функцией
+
+// Вызывайте `analyzeCommand` после распознавания речи
+Voice.onSpeechResults = (event) => {
+  if (event.value && event.value.length > 0) {
+    const recognizedText = event.value[0];
+    setRecognizedText(recognizedText);
+    analyzeCommand(recognizedText); // Анализ команды
+  }
+};import { Linking, Alert } from 'react-native';
+
+// Функция для анализа текста команды
+export const analyzeCommand = (command) => {
+  // Привести команду к нижнему регистру для удобства анализа
+  const lowerCommand = command.toLowerCase();
+
+  // Проверка на выполнение действий
+  if (lowerCommand.includes('позвони')) {
+    const contact = lowerCommand.replace('позвони', '').trim();
+    if (contact) {
+      makeCall(contact);
+    } else {
+      Alert.alert('Ошибка', 'Укажите имя контакта для звонка.');
+    }
+  } else if (lowerCommand.includes('открой')) {
+    const app = lowerCommand.replace('открой', '').trim();
+    openApp(app);
+  } else if (lowerCommand.includes('найди')) {
+    const query = lowerCommand.replace('найди', '').trim();
+    searchWeb(query);
+  } else if (lowerCommand.includes('прочитай сообщения')) {
+    readMessages();
+  } else {
+    Alert.alert('Неизвестная команда', 'Попробуйте еще раз.');
+  }
+};
+
+// Функция для звонков
+const makeCall = (contact) => {
+  // Пример: Предположим, что контакт - это номер телефона
+  const phoneNumber = `tel:${contact}`;
+  Linking.openURL(phoneNumber).catch(() =>
+    Alert.alert('Ошибка', 'Не удалось совершить звонок.')
+  );
+};
+
+// Функция для открытия приложений
+const openApp = (app) => {
+  let appUrl;
+  switch (app) {
+    case 'instagram':
+      appUrl = 'instagram://app';
+      break;
+    case 'facebook':
+      appUrl = 'fb://';
+      break;
+    case 'whatsapp':
+      appUrl = 'whatsapp://send';
+      break;
+    default:
+      Alert.alert('Ошибка', `Не удалось найти приложение: ${app}`);
+      return;
+  }
+
+  Linking.openURL(appUrl).catch(() =>
+    Alert.alert('Ошибка', 'Приложение не установлено.')
+  );
+};
+
+// Функция для поиска в Интернете
+const searchWeb = (query) => {
+  const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+  Linking.openURL(googleSearchUrl).catch(() =>
+    Alert.alert('Ошибка', 'Не удалось выполнить поиск.')
+  );
+};
+
+// Функция для чтения сообщений
+const readMessages = () => {
+  Alert.alert('Функция в разработке', 'Чтение сообщений будет добавлено позже.');
+};
